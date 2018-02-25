@@ -7,7 +7,18 @@ def Gaussian(x,sig,mu):
     """
     Calculate normal distribution give parameters
     """
-    return(np.exp((-(x-mu)**2)/(2*sig**2))/(sig*np.sqrt(2*np.pi)))
+    try:
+        nom = np.exp((-(x-mu)**2)/(2*sig**2))
+    except:
+        import IPython
+        IPython.embed()
+        exit(0)
+    den = sig*np.sqrt(2*np.pi)
+    if den == 0:
+        output = 0
+    else:
+        output = nom/den
+    return output
 
 #a
 def prior_U(q):
@@ -22,7 +33,10 @@ def prior_U(q):
     mu = 1.1627 #best available information of Uc
     sig = 0.05*mu/2
     val_f = Gaussian(q,sig,mu)
-    return log(val_f)
+    #if val_f == 0:
+    #    val_f = 1
+    val_f =np.log(val_f)
+    return (val_f)
 
 def prior_C(C):
     """
@@ -36,7 +50,10 @@ def prior_C(C):
     mu = 0
     sig = 1.1627*0.005/2
     val_prior_C = Gaussian(C,sig,mu)
-    return log(val_prior_C)
+    #if val_prior_C == 0:
+    #    val_prior_C = 1
+    output = np.log(val_prior_C)
+    return (val_prior_C)
 
 def prior_p(p):
     """
@@ -47,8 +64,8 @@ def prior_p(p):
     p is positive
     value of p is between 1 and 10
     """
-    val_prior_p = 1/10
-    return log(val_prior_p)
+    val_prior_p = 0.1
+    return np.log(val_prior_p)
 
 #
 # One should not have to edit the routine below

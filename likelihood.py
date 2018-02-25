@@ -3,7 +3,7 @@
 import numpy as np
 import prior
 from math import log
-#a
+
 def likelihood(q,C,p):
     """
     This routine should return the log of the
@@ -19,4 +19,8 @@ def likelihood(q,C,p):
     for i, val in enumerate(h):
         Uc = q - C*val**p
         val_likelihood *= prior.Gaussian(Uc,sig[i],mu[i])
-    return log(val_likelihood)
+    output =(val_likelihood)
+    #if output <= 0 :
+    #    output = 1
+    output = np.log(output)
+    return output
