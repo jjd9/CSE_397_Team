@@ -2,17 +2,13 @@
 #
 import numpy as np
 from math import log, pi
-
+import mpmath
 def Gaussian(x,sig,mu):
     """
     Calculate normal distribution give parameters
     """
-    try:
-        nom = np.exp((-(x-mu)**2)/(2*sig**2))
-    except:
-        import IPython
-        IPython.embed()
-        exit(0)
+    # nom = np.exp((-(x-mu)**2)/(2*sig**2))
+    nom = mpmath.exp((-(x-mu)**2)/(2*sig**2))
     den = sig*np.sqrt(2*np.pi)
     if den == 0:
         output = 0
@@ -31,7 +27,7 @@ def prior_U(q):
     error expected to be less than 5% with 95% confidence
     """
     mu = 1.1627 #best available information of Uc
-    sig = 0.05*mu/2
+    sig = 0.05*mu/1.96
     val_f = Gaussian(q,sig,mu)
     #if val_f == 0:
     #    val_f = 1
@@ -48,7 +44,7 @@ def prior_C(C):
     95% confidence at h=1 that magntiude of C is less than 0.5% of Uc
     """
     mu = 0
-    sig = 1.1627*0.005/2
+    sig = 1.1627*0.005/1.96
     val_prior_C = Gaussian(C,sig,mu)
     #if val_prior_C == 0:
     #    val_prior_C = 1
