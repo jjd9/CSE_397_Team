@@ -1,9 +1,7 @@
 #!/usr/bin/env python
 #
 import numpy as np
-import IPython
-from scipy import special
-
+from math import log, pi
 
 def Gaussian(x,sig,mu):
     """
@@ -24,7 +22,7 @@ def prior_U(q):
     mu = 1.1627 #best available information of Uc
     sig = 0.05*mu/2
     val_f = Gaussian(q,sig,mu)
-    return np.log(val_f)
+    return log(val_f)
 
 def prior_C(C):
     """
@@ -38,7 +36,7 @@ def prior_C(C):
     mu = 0
     sig = 1.1627*0.005/2
     val_prior_C = Gaussian(C,sig,mu)
-    return np.log(val_prior_C)
+    return log(val_prior_C)
 
 def prior_p(p):
     """
@@ -50,7 +48,7 @@ def prior_p(p):
     value of p is between 1 and 10
     """
     val_prior_p = 1/10
-    return np.log(val_prior_p)
+    return log(val_prior_p)
 
 #
 # One should not have to edit the routine below
