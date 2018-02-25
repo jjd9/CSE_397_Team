@@ -2,7 +2,7 @@
 import numpy as np
 import matplotlib
 matplotlib.use('Agg')
-from matplotlib import pyplot
+from matplotlib import pyplot as plt
 import pylab
 import matplotlib.mlab as mlab
 import matplotlib.ticker as ticker
@@ -26,24 +26,24 @@ def plotter(chain,quant,xmin=None,xmax=None):
     qpdf = qkde.evaluate(bins)
 
     # plot posterior
-    pyplot.figure()
-    pyplot.plot(bins, qpdf, linewidth=3, label="Post")
+    plt.figure()
+    plt.plot(bins, qpdf, linewidth=3, label="Post")
 
     # plot prior (requires some cleverness to do in general)
     qpr  = [fdict['prior_'+quant](x) for x in bins]
     qpri = [np.exp(x) for x in qpr]
     qpri=qpri/np.linalg.norm(qpri)
-    pyplot.plot(bins, qpri, linewidth=3, label="Prior")
+    plt.plot(bins, qpri, linewidth=3, label="Prior")
 
     # user specified bounds to x-range:
     if(xmin != None and xmax != None):
         bounds = np.array([xmin, xmax])
-        pyplot.xlim(bounds)
+        plt.xlim(bounds)
 
-    pyplot.xlabel(quant, fontsize=30)
-    pyplot.ylabel('$\pi('+quant+')$', fontsize=30)
-    pyplot.legend(loc='upper left')
-    pyplot.savefig(quant+'_post.pdf', bbox_inches='tight')
+    plt.xlabel(quant, fontsize=30)
+    plt.ylabel('$\pi('+quant+')$', fontsize=30)
+    plt.legend(loc='upper left')
+    plt.savefig(quant+'_post.pdf', bbox_inches='tight')
 
 
 # -------------------------------------------------------------
@@ -85,8 +85,8 @@ nwalk = 100
 
 # initial guesses for the walkers starting locations
 guess_q = 1.16389876649
-guess_c = 0
-guess_p = 6
+guess_c = 0 #No reason to think c is positive or negative
+guess_p = 6 #o us between 1 and 19
 
 params0       = np.tile([guess_q, guess_c, guess_p], nwalk).reshape(nwalk, 3)
 params0.T[0] += np.random.rand(nwalk) * 0.025    # Perturb q
@@ -161,21 +161,21 @@ qticks = np.linspace(qbounds[0], qbounds[1], 3)
 Cticks = np.linspace(Cbounds[0], Cbounds[1], 3)
 pticks = np.linspace(pbounds[0], pbounds[1], 5)
 
-pyplot.figure()
+plt.figure()
 
 from matplotlib.ticker import MultipleLocator, FormatStrFormatter
 formatter = FormatStrFormatter('%5.4f')
 formatter2 = FormatStrFormatter('%5.f')
 
 pylab.subplot(3,3,1)
-pyplot.plot(qbins, qpdf, linewidth=2, color="k", label="Post")
+plt.plot(qbins, qpdf, linewidth=2, color="k", label="Post")
 
-pyplot.xlim(qbounds)
+plt.xlim(qbounds)
 pylab.gca().set_xticks(qticks)
 pylab.gca().xaxis.set_major_formatter(formatter)
 pylab.gca().xaxis.set_minor_formatter(formatter)
 pylab.gca().set_yticks([])
-pyplot.xlabel('$q$', fontsize=24)
+plt.xlabel('$q$', fontsize=24)
 
 pylab.subplot(3,3,2)
 H, qe, Ce = np.histogram2d(s.flatchain[:,0], s.flatchain[:,1], bins=(200,200))
@@ -183,13 +183,13 @@ H, qe, Ce = np.histogram2d(s.flatchain[:,0], s.flatchain[:,1], bins=(200,200))
 qv = 0.5*(qe[0:-1] + qe[1:len(qe)]);
 Cv = 0.5*(Ce[0:-1] + Ce[1:len(Ce)]);
 
-pyplot.contour(Cv,qv,H,5,colors='k')
+plt.contour(Cv,qv,H,5,colors='k')
 
-pyplot.xlim(Cbounds)
+plt.xlim(Cbounds)
 pylab.gca().set_xticks(Cticks)
 pylab.gca().set_xticklabels([])
 
-#pyplot.ylim(qbounds)
+#plt.ylim(qbounds)
 pylab.gca().set_yticks(qticks)
 pylab.gca().set_yticklabels([])
 
@@ -199,24 +199,24 @@ H, qe, pe = np.histogram2d(s.flatchain[:,0], s.flatchain[:,2], bins=(200,200))
 qv = 0.5*(qe[0:-1] + qe[1:len(qe)]);
 pv = 0.5*(pe[0:-1] + pe[1:len(pe)]);
 
-pyplot.contour(pv,qv,H,5,colors='k')
+plt.contour(pv,qv,H,5,colors='k')
 
-pyplot.xlim(pbounds)
+plt.xlim(pbounds)
 pylab.gca().set_xticks(pticks)
 pylab.gca().set_xticklabels([])
 
-pyplot.ylim(qbounds)
+plt.ylim(qbounds)
 pylab.gca().set_yticks(qticks)
 pylab.gca().set_yticklabels([])
 
 pylab.subplot(3,3,5)
-pyplot.plot(Cbins, Cpdf, linewidth=2, color="k",label="Post")
+plt.plot(Cbins, Cpdf, linewidth=2, color="k",label="Post")
 pylab.gca().xaxis.set_major_formatter(formatter)
 pylab.gca().xaxis.set_minor_formatter(formatter)
 pylab.gca().set_yticks([])
-pyplot.xlabel('$C$', fontsize=24)
+plt.xlabel('$C$', fontsize=24)
 
-pyplot.xlim(Cbounds)
+plt.xlim(Cbounds)
 pylab.gca().set_xticks(Cticks)
 
 pylab.subplot(3,3,6)
@@ -225,23 +225,23 @@ H, Ce, pe = np.histogram2d(s.flatchain[:,1], s.flatchain[:,2], bins=(200,200))
 Cv = 0.5*(Ce[0:-1] + Ce[1:len(Ce)]);
 pv = 0.5*(pe[0:-1] + pe[1:len(pe)]);
 
-pyplot.contour(pv,Cv,H,5,colors='k')
+plt.contour(pv,Cv,H,5,colors='k')
 
-pyplot.xlim(pbounds)
+plt.xlim(pbounds)
 pylab.gca().set_xticks(pticks)
 pylab.gca().set_xticklabels([])
 
-pyplot.ylim(Cbounds)
+plt.ylim(Cbounds)
 pylab.gca().set_yticks(Cticks)
 pylab.gca().set_yticklabels([])
 
 pylab.subplot(3,3,9)
-pyplot.plot(pbins, ppdf, linewidth=2, color="k", label="Post")
+plt.plot(pbins, ppdf, linewidth=2, color="k", label="Post")
 pylab.gca().xaxis.set_major_formatter(formatter2)
 pylab.gca().xaxis.set_minor_formatter(formatter2)
 pylab.gca().set_yticks([])
-pyplot.xlabel('$p$', fontsize=24)
+plt.xlabel('$p$', fontsize=24)
 
-pyplot.xlim(pbounds)
+plt.xlim(pbounds)
 pylab.gca().set_xticks(pticks)
-pyplot.savefig('joint_post.pdf', bbox_inches='tight')
+plt.savefig('joint_post.pdf', bbox_inches='tight')
