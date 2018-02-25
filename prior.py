@@ -23,8 +23,8 @@ def prior_U(q):
     """
     mu = 1.1627 #best available information of Uc
     sig = 0.05*mu/2
-    f = Gaussian(q,sig,mu)
-    return np.log(prior_U)
+    val_f = Gaussian(q,sig,mu)
+    return np.log(val_f)
 
 def prior_C(C):
     """
@@ -37,8 +37,8 @@ def prior_C(C):
     """
     mu = 0
     sig = 1.1627*0.005/2
-    prior_C = Gaussian(C,sig,mu)
-    return np.log(prior_C)
+    val_prior_C = Gaussian(C,sig,mu)
+    return np.log(val_prior_C)
 
 def prior_p(p):
     """
@@ -49,8 +49,8 @@ def prior_p(p):
     p is positive
     value of p is between 1 and 10
     """
-    prior_p = 1/10
-    return np.log(prior_p)
+    val_prior_p = 1/10
+    return np.log(val_prior_p)
 
 #
 # One should not have to edit the routine below

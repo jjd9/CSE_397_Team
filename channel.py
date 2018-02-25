@@ -95,9 +95,13 @@ params0.T[2] += np.random.rand(nwalk) * 1.5      # Perturb p...
 params0.T[2]  = np.absolute(params0.T[2])        # ...and force >= 0
 
 print("\nInitializing the sampler and burning in walkers")
-s = EnsembleSampler(nwalk, params0.shape[-1], bre, threads=4)
-pos, prob, state = s.run_mcmc(params0, 5000)
-s.reset()
+try:
+    s = EnsembleSampler(nwalk, params0.shape[-1], bre, threads=4)
+    pos, prob, state = s.run_mcmc(params0, 5000)
+    s.reset()
+except KeyboardInterrupt:
+    IPython.embed()
+    exit(0)
 
 print("\nSampling the posterior density for the problem")
 s.run_mcmc(pos, 10000)
