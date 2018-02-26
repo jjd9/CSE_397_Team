@@ -2,13 +2,11 @@
 #
 import numpy as np
 from math import log, pi
-import mpmath
 def Gaussian(x,sig,mu):
     """
     Calculate normal distribution give parameters
     """
-    # nom = np.exp((-(x-mu)**2)/(2*sig**2))
-    nom = mpmath.exp((-(x-mu)**2)/(2*sig**2))
+    nom = np.exp((-(x-mu)**2)/(2*sig**2))
     den = sig*np.sqrt(2*np.pi)
     if den == 0:
         output = 0
