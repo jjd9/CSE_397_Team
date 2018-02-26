@@ -18,6 +18,6 @@ def likelihood(q,C,p):
     for i, val in enumerate(h):
         Uc = q - C*val**p
         val_likelihood *= prior.Gaussian(Uc,sig[i],mu[i])
-    output =(val_likelihood)
-    output = np.log(output)
-    return output
+    output_L =(val_likelihood)
+    output_L = np.log(output_L)
+    return output_L
