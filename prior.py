@@ -4,14 +4,11 @@ import numpy as np
 from math import log, pi
 def Gaussian(x,sig,mu):
     """
-    Calculate normal distribution give parameters
+    Calculate normal distribution given parameters
     """
     nom = np.exp((-(x-mu)**2)/(2*sig**2))
     den = sig*np.sqrt(2*np.pi)
-    if den == 0:
-        output_G = 0
-    else:
-        output_G = nom/den
+    output_G = nom/den
     return output_G
 
 #a
@@ -27,9 +24,7 @@ def prior_U(q):
     mu = 1.1627 #best available information of Uc
     sig = 0.05*mu/1.96
     output_U = Gaussian(q,sig,mu)
-    #if val_f == 0:
-    #    val_f = 1
-    output_U =np.log(val_U)
+    output_U =np.log(output_U)
     return (output_U)
 
 def prior_C(C):
@@ -44,8 +39,6 @@ def prior_C(C):
     mu = 0
     sig = 1.1627*0.005/1.96
     val_prior_C = Gaussian(C,sig,mu)
-    #if val_prior_C == 0:
-    #    val_prior_C = 1
     output_C = np.log(val_prior_C)
     return (output_C)
 
@@ -58,8 +51,8 @@ def prior_p(p):
     p is positive
     value of p is between 1 and 10
     """
-    output_prior_p = 0.1
-    return np.log(output_prior_p)
+    output_P = 0.1
+    return np.log(output_P)
 
 #
 # One should not have to edit the routine below
