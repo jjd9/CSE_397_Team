@@ -52,7 +52,11 @@ def prior_p(p):
     p is positive
     value of p is between 1 and 10
     """
-    output_P = 0.1
+    #output_P = 0.1
+    p_Set = [2,3,6,7]
+    mu = np.mean(p_Set)
+    sig = np.std(p_Set)
+    output_P = Gaussian(p,sig,nmu)
     return np.log(output_P)
 
 #
