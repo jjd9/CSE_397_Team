@@ -9,7 +9,7 @@ def Gaussian(x,sig,mu):
     """
     nom = np.exp((-(x-mu)**2)/(2*sig**2))
     den = sig*np.sqrt(2*np.pi)
-    return (0 if nom == 0 and den == 0 else float(nom)/den)
+    return (float(nom)/den)
 #a
 def prior_U(q):
     """
