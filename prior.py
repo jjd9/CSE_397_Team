@@ -56,7 +56,7 @@ def prior_p(p):
     p_Set = [2,3,6,7]
     mu = np.mean(p_Set)
     sig = np.std(p_Set)
-    output_P = Gaussian(p,sig,nmu)
+    output_P = Gaussian(p,sig,mu)
     return np.log(output_P)
 
 #
