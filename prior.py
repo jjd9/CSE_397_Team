@@ -2,6 +2,7 @@
 #
 import numpy as np
 from math import log, pi
+
 def Gaussian(x,sig,mu):
     """
     Calculate normal distribution given parameters
@@ -24,7 +25,10 @@ def prior_U(q):
     mu = 1.1627 #best available information of Uc
     sig = 0.05*mu/1.96
     output_U = Gaussian(q,sig,mu)
-    output_U =np.log(output_U)
+    if output_U == 0:
+        output_U = -np.inf
+    else:
+        output_U =np.log(output_U)
     return (output_U)
 
 def prior_C(C):
@@ -39,7 +43,11 @@ def prior_C(C):
     mu = 0
     sig = 1.1627*0.005/1.96
     val_prior_C = Gaussian(C,sig,mu)
-    output_C = np.log(val_prior_C)
+    if val_prior_C == 0:
+        output_C = - np.inf
+    else:
+        output_C = np.log(val_prior_C)
+
     return (output_C)
 
 def prior_p(p):
