@@ -86,7 +86,7 @@ nwalk = 100
 # initial guesses for the walkers starting locations
 guess_q = 1.16389876649
 guess_c = 0 #No reason to think c is positive or negative
-guess_p = 6 #o us between 1 and 19
+guess_p = 6 #p is between 1 and 10
 
 params0       = np.tile([guess_q, guess_c, guess_p], nwalk).reshape(nwalk, 3)
 params0.T[0] += np.random.rand(nwalk) * 0.025    # Perturb q
