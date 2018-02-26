@@ -9,8 +9,9 @@ def Gaussian(x,sig,mu):
     """
     nom = np.exp((-(x-mu)**2)/(2*sig**2))
     den = sig*np.sqrt(2*np.pi)
-    return (float(nom)/den)
-#a
+    output_G = float(nom)/den
+    return output_G
+
 def prior_U(q):
     """
     This routine should return the log of the
