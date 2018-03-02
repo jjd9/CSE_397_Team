@@ -12,10 +12,11 @@ import IPython
 # local files that will be imported
 import prior
 import likelihood
+import numpy as np
 
-
-def normalizer(arg):
-    new = [(x-min(arg))/(max(arg)-min(arg)) for x in arg]
+def normalizer(y,x):
+    term = np.trapz(y,x)
+    new = [val/term for val in y]
     return new
 
 
@@ -33,7 +34,7 @@ def plotter(chain,quant,xmin=None,xmax=None):
     qpdf = qkde.evaluate(bins)
 
     # plot posterior
-    qpdf = normalizer(qpdf)
+    qpdf = normalizer(qpdf, bins)
     plt.figure()
     plt.plot(bins, qpdf, linewidth=3, label="Post")
 
@@ -41,7 +42,7 @@ def plotter(chain,quant,xmin=None,xmax=None):
     qpr  = [fdict['prior_'+quant](x) for x in bins]
     qpri = [np.exp(x) for x in qpr]
     qpri=qpri/np.linalg.norm(qpri)
-    qpri = normalizer(qpri)
+    qpri = normalizer(qpri,bins)
     plt.plot(bins, qpri, linewidth=3, label="Prior")
 
     # user specified bounds to x-range:
