@@ -26,6 +26,8 @@ def plotter(chain,quant,xmin=None,xmax=None):
     qpdf = qkde.evaluate(bins)
 
     # plot posterior
+    IPython.embed()
+    exit(0)
     plt.figure()
     plt.plot(bins, qpdf, linewidth=3, label="Post")
 
