@@ -8,10 +8,17 @@ import matplotlib.mlab as mlab
 import matplotlib.ticker as ticker
 from scipy import stats
 import sys
-
+import IPython
 # local files that will be imported
 import prior
 import likelihood
+
+
+def normalizer(arg):
+    new = [(x-min(arg))/(max(arg)-min(arg)) for x in arg]
+    return new
+
+
 
 # construct map of prior functions, to plot below
 fdict = {'prior_p': prior.prior_p,'prior_U': prior.prior_U,'prior_C': prior.prior_C}
@@ -26,8 +33,7 @@ def plotter(chain,quant,xmin=None,xmax=None):
     qpdf = qkde.evaluate(bins)
 
     # plot posterior
-    IPython.embed()
-    exit(0)
+    qpdf = normalizer(qpdf)
     plt.figure()
     plt.plot(bins, qpdf, linewidth=3, label="Post")
 
@@ -35,6 +41,7 @@ def plotter(chain,quant,xmin=None,xmax=None):
     qpr  = [fdict['prior_'+quant](x) for x in bins]
     qpri = [np.exp(x) for x in qpr]
     qpri=qpri/np.linalg.norm(qpri)
+    qpri = normalizer(qpri)
     plt.plot(bins, qpri, linewidth=3, label="Prior")
 
     # user specified bounds to x-range:
