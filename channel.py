@@ -17,6 +17,7 @@ import numpy as np
 def normalizer(y,x):
     term = np.trapz(y,x)
     new = [val/term for val in y]
+    print(np.trapz(new,x))
     return new
 
 
